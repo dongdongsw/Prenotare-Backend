@@ -25,7 +25,7 @@ public class RoomEntity {
 	private String thumbnail; // 방 대표 사진
 	private String images; // 방 사진들
 	private String status; // 방 이용 가능한지
-	
+	private int hit; // 방 조회수
 	private LocalTime opentime;  // 오픈 시간
 	private LocalTime closetime;  // 닫는 시간
 	

@@ -1,8 +1,17 @@
 package com.sist.web.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sist.web.dto.RoomListDTO;
 import com.sist.web.service.RoomService;
 
 import lombok.RequiredArgsConstructor;
@@ -14,5 +23,30 @@ public class RoomRestController {
 
 	private final RoomService rService;
 	
-	
+	@GetMapping("/room/list/{page}") 
+	public ResponseEntity<Map> room_list(@PathVariable("page")int page){
+		
+		Map map = new HashMap<>();
+		
+		try {
+			
+			List<RoomListDTO> list = rService.roomListData();
+			int totalpage = rService.roomTotalPage(page);
+			
+			final int BLOCK = 12;
+			int startPage = ((page-1)/BLOCK*BLOCK) + 1;
+			int endPage = ((page-1)/BLOCK*BLOCK) + BLOCK;
+			
+			map.put("list", list);
+			map.put("totalpage", totalpage);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
+			map.put("curpage", page);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
 }
