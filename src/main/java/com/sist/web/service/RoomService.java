@@ -1,11 +1,13 @@
 package com.sist.web.service;
 
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.sist.web.dto.RoomListDTO;
 
 public interface RoomService {
 
-	public List<RoomListDTO> roomListData();
+	public Page<RoomListDTO> roomListData(Pageable pg);
 	public int roomTotalPage(int start);
 }

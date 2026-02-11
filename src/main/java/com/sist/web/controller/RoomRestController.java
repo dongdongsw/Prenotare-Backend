@@ -1,9 +1,14 @@
 package com.sist.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,8 +34,15 @@ public class RoomRestController {
 		Map map = new HashMap<>();
 		
 		try {
+			final int ROWSIZE = 12;
+			int start = (page - 1) * ROWSIZE;
 			
-			List<RoomListDTO> list = rService.roomListData();
+			Pageable pg = PageRequest.of(page-1, ROWSIZE, Sort.by(Sort.Direction.DESC, "no"));
+			Page<RoomListDTO> pList = rService.roomListData(pg);
+			List<RoomListDTO> list = new ArrayList<>();
+			if(pList != null && pList.hasContent()) {
+				list = pList.getContent();
+			}
 			int totalpage = rService.roomTotalPage(page);
 			
 			final int BLOCK = 12;

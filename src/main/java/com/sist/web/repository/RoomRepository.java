@@ -1,7 +1,8 @@
 package com.sist.web.repository;
 
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,7 +15,6 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Integer>{
 			SELECT no, name, personnel, thumbnail, images, status, hit, opentime, closetime
 			FROM room
 			ORDER BY no DESC 
-			Limit 0, 12
 			""", nativeQuery = true)
-	public List<RoomListDTO> roomListData();
+	public Page<RoomListDTO> roomListData(Pageable pg);
 }

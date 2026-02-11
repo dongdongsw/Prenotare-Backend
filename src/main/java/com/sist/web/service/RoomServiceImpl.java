@@ -2,6 +2,8 @@ package com.sist.web.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sist.web.dto.RoomListDTO;
@@ -16,9 +18,9 @@ public class RoomServiceImpl implements RoomService{
 	private final RoomRepository rRepository;
 
 	@Override
-	public List<RoomListDTO> roomListData() {
+	public Page<RoomListDTO> roomListData(Pageable pg) {
 		// TODO Auto-generated method stub
-		return rRepository.roomListData();
+		return rRepository.roomListData(pg);
 	}
 
 	@Override
