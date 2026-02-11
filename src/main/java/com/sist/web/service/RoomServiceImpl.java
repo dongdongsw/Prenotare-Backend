@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sist.web.dto.RoomListDTO;
+import com.sist.web.entity.RoomEntity;
 import com.sist.web.repository.RoomRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,12 @@ public class RoomServiceImpl implements RoomService{
 	public int roomTotalPage(int start) {
 		// TODO Auto-generated method stub
 		return (int)(Math.ceil(rRepository.count()/12.0));
+	}
+
+	@Override
+	public RoomEntity findByNo(int no) {
+		// TODO Auto-generated method stub
+		return rRepository.findByNo(no);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.sist.web.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.web.dto.RoomListDTO;
+import com.sist.web.entity.RoomEntity;
 import com.sist.web.service.RoomService;
 
 import lombok.RequiredArgsConstructor;
@@ -60,5 +62,28 @@ public class RoomRestController {
 		}
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+	
+	@GetMapping("/room/detail/{no}") 
+	public ResponseEntity<RoomEntity> room_detail(@PathVariable("no") int no){
+		
+		RoomEntity vo = new RoomEntity();
+		List<String> imageList = new ArrayList<>();
+		try {
+			vo = rService.findByNo(no);
+			if(vo.getImages() != null && vo.getImages().contains("|")) {
+				for(String image : vo.getImages().split("\\|")) {
+					imageList.add(image);
+				}
+				vo.setImageList(imageList);
+			}
+			
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(vo, HttpStatus.OK);
 	}
 }

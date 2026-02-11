@@ -2,12 +2,16 @@ package com.sist.web.entity;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -26,10 +30,15 @@ public class RoomEntity {
 	private String images; // 방 사진들
 	private String status; // 방 이용 가능한지
 	private int hit; // 방 조회수
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime opentime;  // 오픈 시간
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime closetime;  // 닫는 시간
 	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime createdAt; // 생성 날짜
 	private LocalDateTime updatedAt; // 수정 날짜
-	
+
+	@Transient
+	private List<String> imageList;
 }
