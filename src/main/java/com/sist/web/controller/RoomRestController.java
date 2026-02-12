@@ -14,10 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.web.dto.RoomListDTO;
 import com.sist.web.entity.RoomEntity;
@@ -90,11 +94,15 @@ public class RoomRestController {
 	}
 	
 	@PostMapping("/room/insert") 
-	public ResponseEntity<Void> room_insert(@RequestBody RoomEntity vo){
+	public ResponseEntity<Void> room_insert(
+		    @ModelAttribute RoomEntity vo, 
+		    @RequestParam("thumbFile") MultipartFile thumbnail,
+		    @RequestParam("imageFiles") List<MultipartFile> images
+			){
 		
 		try {
 			
-			rService.roomInsertData(vo);
+			rService.roomInsertData(vo, thumbnail, images);
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

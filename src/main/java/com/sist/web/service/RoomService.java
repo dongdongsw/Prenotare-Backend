@@ -1,9 +1,12 @@
 package com.sist.web.service;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.web.dto.RoomListDTO;
 import com.sist.web.entity.RoomEntity;
@@ -15,5 +18,5 @@ public interface RoomService {
 	
 	public RoomEntity findByNo(int no);
 	
-	public void roomInsertData(RoomEntity vo);
+	public void roomInsertData(RoomEntity vo, MultipartFile thumbnail, List<MultipartFile>images) throws Exception;
 }
