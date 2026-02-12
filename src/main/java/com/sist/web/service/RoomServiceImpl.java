@@ -35,5 +35,12 @@ public class RoomServiceImpl implements RoomService{
 		// TODO Auto-generated method stub
 		return rRepository.findByNo(no);
 	}
+
+	@Override
+	public void roomInsertData(RoomEntity vo) {
+		// TODO Auto-generated method stub
+		
+		rRepository.save(vo);
+	}
 	
 }

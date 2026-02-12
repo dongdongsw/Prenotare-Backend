@@ -20,4 +20,5 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Integer>{
 	public Page<RoomListDTO> roomListData(Pageable pg);
 	
 	public RoomEntity findByNo(@Param("no") int no);
+	
 }

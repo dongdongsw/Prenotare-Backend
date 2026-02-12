@@ -14,4 +14,6 @@ public interface RoomService {
 	public int roomTotalPage(int start);
 	
 	public RoomEntity findByNo(int no);
+	
+	public void roomInsertData(RoomEntity vo);
 }
