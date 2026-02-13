@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,15 +29,22 @@ public class RoomEntity {
 	private String content; // 방 소개
 	private String thumbnail; // 방 대표 사진
 	private String images; // 방 사진들
+	
+	@Column(insertable = false, updatable = true)
 	private String status; // 방 이용 가능한지
+	
 	private int hit; // 방 조회수
+	
 	@JsonFormat(pattern = "HH:mm")
 	private LocalTime opentime;  // 오픈 시간
+	
 	@JsonFormat(pattern = "HH:mm")
 	private LocalTime closetime;  // 닫는 시간
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Column(insertable = false, updatable = false)
 	private LocalDateTime createdAt; // 생성 날짜
+	
 	private LocalDateTime updatedAt; // 수정 날짜
 
 	@Transient

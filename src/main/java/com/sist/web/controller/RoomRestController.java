@@ -13,13 +13,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -94,22 +93,37 @@ public class RoomRestController {
 	}
 	
 	@PostMapping("/room/insert") 
-	public ResponseEntity<Void> room_insert(
+	public ResponseEntity<String> room_insert(
 		    @ModelAttribute RoomEntity vo, 
 		    @RequestParam("thumbFile") MultipartFile thumbnail,
 		    @RequestParam("imageFiles") List<MultipartFile> images
 			){
-		
+
+		String res = "";
 		try {
 			
-			rService.roomInsertData(vo, thumbnail, images);
+			res = rService.roomInsertData(vo, thumbnail, images);
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/room/delete")
+	public ResponseEntity<String> room_delete(@RequestParam("no")int no){
 		
-		return ResponseEntity.ok().build();
+		String res = "";
+		try {
+			res = rService.deleteByNo(no);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 }

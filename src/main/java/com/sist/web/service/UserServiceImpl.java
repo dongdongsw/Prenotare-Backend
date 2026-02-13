@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		UserDTO user = new UserDTO();
 		boolean exist = uRepository.existsById(id);
+		user.setRole(uRepository.findById(id).getRole()); 
+		user.setNo(uRepository.findById(id).getNo());
 		if(exist == false) {
 			user.setMsg("NOID");
 		}

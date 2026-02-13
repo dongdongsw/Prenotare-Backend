@@ -18,5 +18,7 @@ public interface RoomService {
 	
 	public RoomEntity findByNo(int no);
 	
-	public void roomInsertData(RoomEntity vo, MultipartFile thumbnail, List<MultipartFile>images) throws Exception;
+	public String roomInsertData(RoomEntity vo, MultipartFile thumbnail, List<MultipartFile>images) throws Exception;
+	
+	public String deleteByNo(int no);
 }
