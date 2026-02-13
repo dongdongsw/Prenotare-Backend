@@ -8,7 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sist.web.dto.MyReserveDTO;
 import com.sist.web.dto.RoomListDTO;
+import com.sist.web.dto.RoomReserveDTO;
+import com.sist.web.entity.ReserveEntity;
 import com.sist.web.entity.RoomEntity;
 
 public interface RoomService {
@@ -21,4 +24,8 @@ public interface RoomService {
 	public String roomInsertData(RoomEntity vo, MultipartFile thumbnail, List<MultipartFile>images) throws Exception;
 	
 	public String deleteByNo(int no);
+	
+	public String reserveInsertData(RoomReserveDTO vo);
+	
+	public Page<MyReserveDTO> findByUsers_No(Pageable pg, int no);
 }

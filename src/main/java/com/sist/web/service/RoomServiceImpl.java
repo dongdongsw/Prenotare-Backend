@@ -11,9 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sist.web.dto.MyReserveDTO;
 import com.sist.web.dto.RoomListDTO;
+import com.sist.web.dto.RoomReserveDTO;
+import com.sist.web.entity.ReserveEntity;
 import com.sist.web.entity.RoomEntity;
+import com.sist.web.entity.UserEntity;
 import com.sist.web.repository.RoomRepository;
+import com.sist.web.repository.RoomReserveRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class RoomServiceImpl implements RoomService{
 
 	private final RoomRepository rRepository;
+	private final RoomReserveRepository rReserveRepository;
 	private final String uploadPath = "C:/upload/room/";
 
 	@Override
@@ -97,5 +103,40 @@ public class RoomServiceImpl implements RoomService{
 		}
 		return res;
 	}
+
+	@Override
+	public String reserveInsertData(RoomReserveDTO vo) {
+		// TODO Auto-generated method stub
+		String res = "";
+		if(vo == null) {
+			return res = "FAIL";
+		}
+		
+		ReserveEntity reserve = new ReserveEntity();
+		UserEntity user = new UserEntity();
+		user.setNo(vo.getUsers_no());
+		
+		RoomEntity room = new RoomEntity();
+		room.setNo(vo.getRoom_no());
+		
+		reserve.setUsers(user);
+		reserve.setRoom(room);
+		reserve.setStartTime(vo.getStartTime());
+		reserve.setEndTime(vo.getEndTime());
+		reserve.setReserveDate(vo.getReserveDate());
+		
+		rReserveRepository.save(reserve);
+		res = "SUCCESS";
+		return res;
+	}
+
+
+	@Override
+	public Page<MyReserveDTO> findByUsers_No(Pageable pg, int no) {
+		// TODO Auto-generated method stub
+		return rReserveRepository.findByUsers_No(pg, no);
+	}
+
+	
 	
 }

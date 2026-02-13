@@ -1,5 +1,6 @@
 package com.sist.web.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -43,9 +44,9 @@ public class RoomEntity {
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(insertable = false, updatable = false)
-	private LocalDateTime createdAt; // 생성 날짜
+	private LocalDate createdAt; // 생성 날짜
 	
-	private LocalDateTime updatedAt; // 수정 날짜
+	private LocalDate updatedAt; // 수정 날짜
 
 	@Transient
 	private List<String> imageList;
