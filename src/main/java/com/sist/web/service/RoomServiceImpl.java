@@ -45,7 +45,11 @@ public class RoomServiceImpl implements RoomService{
 	@Override
 	public RoomEntity findByNo(int no) {
 		// TODO Auto-generated method stub
-		return rRepository.findByNo(no);
+		RoomEntity room = new RoomEntity();
+		room = rRepository.findByNo(no);
+		room.setHit(room.getHit() + 1);
+		rRepository.save(room);
+		return room;
 	}
 
 	@Transactional
@@ -135,6 +139,29 @@ public class RoomServiceImpl implements RoomService{
 	public Page<MyReserveDTO> findByUsers_No(Pageable pg, int no) {
 		// TODO Auto-generated method stub
 		return rReserveRepository.findByUsers_No(pg, no);
+	}
+
+	@Transactional
+	@Override
+	public String mypageReserveCancel(int no) {
+		// TODO Auto-generated method stub
+		
+		String res = "";
+		try {
+			ReserveEntity reserve = rReserveRepository.findById(no);
+			reserve.setStatus("CANCEL");
+			rReserveRepository.save(reserve);
+			res = "SUCCESS";
+			
+		} catch (Exception ex) {
+
+			res = "FAIL";
+			ex.printStackTrace();
+			throw new RuntimeException("cancel error" + ex);
+		}
+		
+		
+		return res;
 	}
 
 	

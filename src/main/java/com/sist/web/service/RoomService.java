@@ -28,4 +28,6 @@ public interface RoomService {
 	public String reserveInsertData(RoomReserveDTO vo);
 	
 	public Page<MyReserveDTO> findByUsers_No(Pageable pg, int no);
+	
+	public String mypageReserveCancel(int no);
 }

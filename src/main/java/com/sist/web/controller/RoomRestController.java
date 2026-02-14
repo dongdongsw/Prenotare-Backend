@@ -147,7 +147,7 @@ public class RoomRestController {
 	public ResponseEntity<Map> mypage_list(@PathVariable("page") int page, @PathVariable("no") int no){
 		
 		Map map = new HashMap<>();
-		final int ROWSIZE = 12;
+		final int ROWSIZE = 3;
 		
 		int start = (page - 1) * ROWSIZE;
 
@@ -160,12 +160,21 @@ public class RoomRestController {
 		int startPage = ((page-1)/BLOCK*BLOCK) + 1;
 		int endPage = ((page-1)/BLOCK*BLOCK) + BLOCK;
 		
-		map.put("list", pList.getContent());
+		map.put("reList", pList.getContent());
 		map.put("totalpage", totalpage);
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
 		map.put("curpage", page);
 		
 		return new ResponseEntity<Map>(map, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/mypage/reserve/cancel/{no}")
+	public ResponseEntity<String> mypage_reserve_cancel(@PathVariable("no") int no){
+		
+		String res = rService.mypageReserveCancel(no);
+		
+		return new ResponseEntity<>(res, HttpStatus.OK);
+		
 	}
 }

@@ -4,20 +4,23 @@ import java.time.LocalDate;
 
 public interface MyReserveDTO {
 
-	UserInfo getUsers();
-	RoomInfo getRoom();
+	public int getNo();
+	public UserInfo getUsers();
+	public RoomInfo getRoom();
     
-    String getStatus();
-    LocalDate getReserveDate();
-    String getStartTime();
-    String getEndTime();
-    LocalDate getCreatedAt();
+	public String getStatus();
+	public LocalDate getReserveDate();
+	public String getStartTime();
+	public String getEndTime();
+	public LocalDate getCreatedAt();
     
     interface UserInfo{
     	Integer getNo();
     }
     
     interface RoomInfo{
+    	Integer getNo();
+    	String getContent();
     	String getName();
     	Integer getPersonnel();
     	String getThumbnail();

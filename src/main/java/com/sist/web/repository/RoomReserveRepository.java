@@ -12,4 +12,6 @@ import com.sist.web.entity.ReserveEntity;
 public interface RoomReserveRepository extends JpaRepository<ReserveEntity, Integer>{
 
 	public Page<MyReserveDTO> findByUsers_No(Pageable pg, @Param("no") int no);
+	
+	public ReserveEntity findById(@Param("no") int no);
 }
