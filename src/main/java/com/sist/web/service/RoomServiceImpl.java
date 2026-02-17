@@ -1,6 +1,7 @@
 package com.sist.web.service;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.web.dto.MyReserveDTO;
+import com.sist.web.dto.ReserveDateDTO;
 import com.sist.web.dto.RoomListDTO;
 import com.sist.web.dto.RoomReserveDTO;
 import com.sist.web.entity.ReserveEntity;
@@ -162,6 +164,13 @@ public class RoomServiceImpl implements RoomService{
 		
 		
 		return res;
+	}
+
+	@Override
+	public List<ReserveDateDTO> reserveDateCheck(int no, LocalDate reserveDate) {
+		// TODO Auto-generated method stub
+		
+		return rReserveRepository.reserveDateCheck(no, reserveDate);
 	}
 
 	

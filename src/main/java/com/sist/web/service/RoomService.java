@@ -1,6 +1,7 @@
 package com.sist.web.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sist.web.dto.MyReserveDTO;
+import com.sist.web.dto.ReserveDateDTO;
 import com.sist.web.dto.RoomListDTO;
 import com.sist.web.dto.RoomReserveDTO;
 import com.sist.web.entity.ReserveEntity;
@@ -30,4 +32,6 @@ public interface RoomService {
 	public Page<MyReserveDTO> findByUsers_No(Pageable pg, int no);
 	
 	public String mypageReserveCancel(int no);
+	
+	public List<ReserveDateDTO> reserveDateCheck(int no, LocalDate reserveDate);
 }

@@ -1,5 +1,6 @@
 package com.sist.web.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,11 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sist.web.dto.CommentDTO;
 import com.sist.web.dto.MyReserveDTO;
+import com.sist.web.dto.ReserveDateDTO;
 import com.sist.web.dto.RoomListDTO;
 import com.sist.web.dto.RoomReserveDTO;
 import com.sist.web.entity.ReserveEntity;
 import com.sist.web.entity.RoomEntity;
+import com.sist.web.service.CommentService;
 import com.sist.web.service.RoomService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,6 +42,7 @@ import lombok.RequiredArgsConstructor;
 public class RoomRestController {
 
 	private final RoomService rService;
+	private final CommentService cService;
 	
 	@GetMapping("/room/list/{page}") 
 	public ResponseEntity<Map> room_list(@PathVariable("page")int page){
@@ -74,8 +79,9 @@ public class RoomRestController {
 	}
 	
 	@GetMapping("/room/detail/{no}") 
-	public ResponseEntity<RoomEntity> room_detail(@PathVariable("no") int no){
+	public ResponseEntity<Map> room_detail(@PathVariable("no") int no){
 		
+		Map map = new HashMap<>();
 		RoomEntity vo = new RoomEntity();
 		List<String> imageList = new ArrayList<>();
 		try {
@@ -86,6 +92,9 @@ public class RoomRestController {
 				}
 				vo.setImageList(imageList);
 			}
+			List<CommentDTO> cList=cService.commentListData(no);
+			map.put("vo", vo);
+			map.put("cList", cList);
 			
 			
 		} catch (Exception ex) {
@@ -93,7 +102,7 @@ public class RoomRestController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<>(vo, HttpStatus.OK);
+		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 	
 	@PostMapping("/room/insert") 
@@ -175,6 +184,14 @@ public class RoomRestController {
 		String res = rService.mypageReserveCancel(no);
 		
 		return new ResponseEntity<>(res, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/room/reserveCheck/{no}/{reserveDate}")
+	public ResponseEntity<List<ReserveDateDTO>> room_reserveCheck(@PathVariable("no") int no, @PathVariable("reserveDate") LocalDate reserveDate){
+		List<ReserveDateDTO> list = rService.reserveDateCheck(no, reserveDate);
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 		
 	}
 }
